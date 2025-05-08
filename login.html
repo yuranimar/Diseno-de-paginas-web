@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Iniciar Sesión - Guardería</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+      background: linear-gradient(to right, #00c9ff, #92fe9d);
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0;
+    }
+
+    .login-card {
+      background: white;
+      padding: 2rem;
+      border-radius: 1rem;
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+      width: 100%;
+      max-width: 400px;
+      animation: slideIn 0.5s ease-out;
+    }
+
+    @keyframes slideIn {
+      from {
+        opacity: 0;
+        transform: translateY(-50px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .login-card h2 {
+      font-weight: 600;
+      color: #027373;
+      text-align: center;
+    }
+
+    .form-label {
+      font-weight: 600;
+    }
+
+    .btn-primary {
+      background-color: #027373;
+      border: none;
+    }
+
+    .btn-primary:hover {
+      background-color: #03989e;
+    }
+
+    .footer {
+      margin-top: 30px;
+      text-align: center;
+      color: #555;
+    }
+
+    .footer a {
+      text-decoration: none;
+      color: #00796b;
+    }
+
+    .footer a:hover {
+      color: #004d40;
+    }
+
+    .text-center p {
+      color: #027373;
+    }
+
+    .d-none {
+      display: none;
+    }
+
+    /* Responsividad */
+    @media (max-width: 768px) {
+      .login-card {
+        padding: 1.5rem;
+        width: 90%;
+      }
+    }
+
+    /* Mensaje de error en rojo */
+    .error-message {
+      color: red;
+      font-size: 14px;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+  <div class="login-card">
+    <h2 class="mb-4">Iniciar Sesión</h2>
+    <form id="loginForm">
+      <div class="mb-3">
+        <label for="usuario" class="form-label">Correo Electrónico</label>
+        <input type="email" class="form-control" id="usuario" placeholder="ejemplo@correo.com" required>
+        <div class="error-message" id="usuarioError"></div>
+      </div>
+      <div class="mb-3">
+        <label for="contrasena" class="form-label">Contraseña</label>
+        <input type="password" class="form-control" id="contrasena" placeholder="Introduce tu contraseña" required>
+        <div class="error-message" id="contrasenaError"></div>
+      </div>
+      <div class="d-grid">
+        <button type="submit" class="btn btn-primary">Ingresar</button>
+      </div>
+      <!-- Mensaje de error general -->
+      <div class="text-center mt-3 text-danger d-none" id="errorMensaje">
+        Usuario o contraseña incorrectos.
+      </div>
+    </form>
+
+<div id="bienvenida" style="display:none; padding: 20px; background: #e0f7fa; border-radius: 12px; text-align: center; margin-top: 20px;">
+  <h2 id="tituloBienvenida">¡Bienvenido!</h2>
+  <p id="mensajeBienvenida">Cargando información...</p>
+</div>
+
+    <!-- Enlace a Registro -->
+    <div class="mt-3 text-center">
+      <p>¿No tienes cuenta? <a href="registro.html" class="text-decoration-none">Regístrate aquí</a></p>
+    </div>
+    <div class="mt-3 text-center">
+      <p><a href="#" id="recuperarContrasena" class="text-decoration-none">¿Olvidaste tu contraseña?</a></p>
+    </div>
+    
+    <!-- Botón de Volver -->
+    <div class="text-center mt-3">
+      <a href="inicio.html" class="btn btn-outline-secondary">
+        <i class="fas fa-home"></i> Volver a la Página Principal
+      </a>
+    </div>
+  </div>
+
+  <!-- Pie de página -->
+  <div class="footer">
+    <p>¿Tienes alguna duda? <a href="contacto.html">Contáctanos</a></p>
+  </div>
+
+  <!-- Firebase SDK -->
+  <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore.js"></script>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-app.js";
+    import { getAuth, signInWithEmailAndPassword, sendPasswordResetEmail } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-auth.js";
+    import { getFirestore, doc, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore.js";
+  
+    const firebaseConfig = {
+      apiKey: "AIzaSyCgfAJpTrTPsdfSux4KWPPXAmjLMc6qYJY",
+      authDomain: "autenticacion-guarderia.firebaseapp.com",
+      projectId: "autenticacion-guarderia",
+      storageBucket: "autenticacion-guarderia.appspot.com",
+      messagingSenderId: "290954088091",
+      appId: "1:290954088091:web:9ee0a2138e70e87cad003e",
+      measurementId: "G-4CX8DSH0SK"
+    };
+  
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
+  
+    const form = document.getElementById('loginForm');
+    const errorMensaje = document.getElementById('errorMensaje');
+    const usuarioError = document.getElementById('usuarioError');
+    const contrasenaError = document.getElementById('contrasenaError');
+    const recuperarContrasenaLink = document.getElementById('recuperarContrasena');
+  
+    // Enviar correo para recuperar la contraseña
+    recuperarContrasenaLink.addEventListener('click', function (e) {
+      e.preventDefault();
+      const usuario = document.getElementById('usuario').value;
+  
+      if (usuario) {
+        sendPasswordResetEmail(auth, usuario)
+          .then(() => {
+            alert("Te hemos enviado un correo para restablecer tu contraseña.");
+          })
+          .catch((error) => {
+            alert("Hubo un problema al enviar el correo: " + error.message);
+          });
+      } else {
+        alert("Por favor, ingresa tu correo electrónico para recuperar tu contraseña.");
+      }
+    });
+  
+    form.addEventListener('submit', async function(e) {
+      e.preventDefault();
+  
+      const usuario = document.getElementById('usuario').value;
+      const contrasena = document.getElementById('contrasena').value;
+  
+      let valid = true;
+  
+      if (!usuario.includes('@')) {
+        usuarioError.textContent = "El correo electrónico debe contener '@'.";
+        valid = false;
+      } else {
+        usuarioError.textContent = '';
+      }
+  
+      if (contrasena.length < 6) {
+        contrasenaError.textContent = "La contraseña debe tener al menos 6 caracteres.";
+        valid = false;
+      } else {
+        contrasenaError.textContent = '';
+      }
+  
+      if (valid) {
+        try {
+          const userCredential = await signInWithEmailAndPassword(auth, usuario, contrasena);
+          const user = userCredential.user;
+  
+          // Leer el documento del usuario
+          const userRef = doc(db, "usuarios", user.uid);
+          const userSnap = await getDoc(userRef);
+  
+          let rol = "desconocido";
+          if (userSnap.exists()) {
+            rol = userSnap.data().rol || "desconocido";
+          }
+  
+          // Guardar la hora de inicio de sesión
+          await setDoc(userRef, {
+            ultimaSesion: new Date().toISOString(),
+            rol: rol // conservar el rol
+          }, { merge: true });
+  
+          // Redireccionar dependiendo del rol
+          if (rol === "administrador") {
+            window.location.href = "admin/menu-principal.html";
+          } else if (rol === "docente") {
+            window.location.href = "docente/menu-principal.html";
+          } else {
+            window.location.href = "Inicio.html"; // para padres u otros
+          }
+  
+        } catch (error) {
+          errorMensaje.classList.remove('d-none');
+          console.error("Error de inicio de sesión:", error);
+        }
+      }
+    });
+    function iniciarSesion() {
+  const correo = document.getElementById("correo").value;
+  const contrasena = document.getElementById("contrasena").value;
+
+  google.script.run
+    .withSuccessHandler(function (respuesta) {
+      if (respuesta && respuesta.autenticado) {
+        // Guardar datos de sesión
+        sessionStorage.setItem("rol", respuesta.rol);
+        sessionStorage.setItem("nombre", respuesta.nombre);
+
+        // Mostrar tarjeta de bienvenida personalizada
+        document.getElementById("tituloBienvenida").innerText = "¡Bienvenido, " + respuesta.nombre + "!";
+        document.getElementById("mensajeBienvenida").innerText = "Has iniciado sesión como: " + respuesta.rol;
+        document.getElementById("bienvenida").style.display = "block";
+
+        // Esperar 2 segundos antes de redirigir
+        setTimeout(function () {
+          if (respuesta.rol === "admin") {
+            window.location.href = "MenuPrincipal.html";
+          } else {
+            window.location.href = "VerAsistencias.html";
+          }
+        }, 2000);
+
+      } else {
+        alert("Credenciales incorrectas. Intenta nuevamente.");
+      }
+    })
+    .iniciarSesion(correo, contrasena);
+}
+
+  </script>
+  <script src="assets/js/auth.js"></script>    
+  <script src="assets/js/firebase.js"></script>   
+    

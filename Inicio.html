@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Pantalla Principal - Guardería</title>
+
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+  <link rel="stylesheet" type="text/css" href="assets/css/estylos.css">
+</head>
+<body>
+
+ <!-- Header -->
+<header>
+  <div class="container text-center">
+    <h1>Bienvenidos al Sistema de Gestión de Guardería</h1>
+    <p>Un sistema fácil y eficiente para gestionar la información de los niños y responsables.</p>
+  </div>
+</header>
+
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top shadow">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#"><i class="fas fa-school"></i> Gestion guardería</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav mx-auto"> <!-- mx-auto para centrar los elementos del menú -->
+        <li class="nav-item">
+          <a class="nav-link active" href="#">Inicio</a>
+        </li>
+        <li class="nav-item">
+          <!-- Enlace en el menú -->
+        <a class="nav-link" href="#quienes-somos">Quiénes somos</a>
+
+        </li>
+        <li class="nav-item">
+        <a class="nav-link" href="#servicios">Servicios</a>
+
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="contacto.html">Contacto</a> 
+        </li>
+      </ul>
+     
+      <a href="login.html" class="btn btn-outline-light btn-sm ms-3" id="loginBtn">Iniciar Sesión</a> 
+    </div>
+  </div>
+</nav>
+<!-- Sección Dinámica de Quiénes somos para la Gestión de Guardería -->
+<section id="quienes-somos" class="bg-light py-5">
+  <div class="container mt-5">
+    <h2 class="text-center mb-4">¿Quiénes somos?</h2>
+    <div class="row align-items-center">
+      <!-- Columna con el texto sobre la guardería -->
+      <div class="col-md-6">
+        <h4 class="text-center mb-3">Cuidamos el Futuro</h4>
+        <p class="text-center">Nuestra plataforma facilita la gestión de guarderías, brindando un entorno digital para gestionar a los niños, sus responsables, los pagos y la asistencia de forma ágil y segura.</p>
+      </div>
+      <!-- Columna con la imagen representativa -->
+      <div class="col-md-6">
+        <img src="assets/img/guarderia 1.jpg" alt="Imagen Guardería" class="img-fluid rounded shadow">
+      </div>
+    </div>
+    <div class="row mt-4">
+      <!-- Columna con la visión del sistema -->
+      <div class="col-md-12 text-center">
+        <h4 class="mb-3">Tecnología para un Cuidado Eficiente</h4>
+        <p>Optimiza la gestión diaria de la guardería, desde el registro de los niños hasta la supervisión de su asistencia, todo
+
+  
+
+  <!-- Sección de contenido principal -->
+  <section class="container my-5">
+    <div class="row">
+      <!-- Contenido principal (article) -->
+      <article class="col-md-8">
+        <h3>¿Por qué usar nuestro sistema?</h3>
+        <p>
+          Este sistema fue creado con el objetivo de facilitar la gestión de la información en una guardería. 
+          Permite el registro y consulta de información de niños, responsables, pagos, asistencia y más. 
+          Está diseñado para ser utilizado tanto en computadoras como en dispositivos móviles, permitiendo 
+          a cualquier persona acceder a la información desde cualquier lugar.
+        </p>
+      </article>
+  
+      <!-- Información adicional (aside) -->
+      <aside class="col-md-4 bg-light p-3 rounded shadow-sm">
+        <h4 class="mb-3">Beneficios</h4>
+        <ul class="list-unstyled">
+          <li><i class="fas fa-check-circle text-success me-2"></i> Acceso desde cualquier dispositivo</li>
+          <li><i class="fas fa-check-circle text-success me-2"></i> Interfaz amigable</li>
+          <li><i class="fas fa-check-circle text-success me-2"></i> Fácil gestión de datos</li>
+          <li><i class="fas fa-check-circle text-success me-2"></i> Ahorro de tiempo</li>
+        </ul>
+      </aside>
+    </div>
+  </section>
+
+
+  <!-- Sección de Servicios -->
+<section id="servicios" class="bg-light py-5">
+  <div class="container mt-5">
+    <h2 class="text-center mb-4">Nuestros Servicios</h2>
+    <div class="row g-4">
+      <!-- Servicio de Niños -->
+      <div class="col-md-4">
+        <div class="card text-center shadow-sm h-100">
+          <div class="card-body">
+            <i class="fas fa-child fa-2x mb-2 text-primary"></i>
+            <h5 class="card-title">Niños</h5>
+            <p class="card-text">Gestión completa de la información de los niños registrados en nuestra guardería.</p>
+            <a href="ninos.html" class="btn btn-primary">Ver Niños</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Servicio de Responsables -->
+      <div class="col-md-4">
+        <div class="card text-center shadow-sm h-100">
+          <div class="card-body">
+            <i class="fas fa-users fa-2x mb-2 text-success"></i>
+            <h5 class="card-title">Responsables</h5>
+            <p class="card-text">Registro y gestión de los padres o acudientes responsables de cada niño.</p>
+            <a href="responsables.html" class="btn btn-success">Ver Responsables</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Servicio de Menú -->
+      <div class="col-md-4">
+        <div class="card text-center shadow-sm h-100">
+          <div class="card-body">
+            <i class="fas fa-utensils fa-2x mb-2 text-warning"></i>
+            <h5 class="card-title">Menú</h5>
+            <p class="card-text">Consulta y actualización del menú alimenticio diario para los niños.</p>
+            <a href="menu.html" class="btn btn-warning text-white">Ver Menú</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Servicio de Pagos -->
+      <div class="col-md-4">
+        <div class="card text-center shadow-sm h-100">
+          <div class="card-body">
+            <i class="fas fa-dollar-sign fa-2x mb-2 text-info"></i>
+            <h5 class="card-title">Pagos</h5>
+            <p class="card-text">Registro y gestión de pagos de mensualidad para los servicios prestados.</p>
+            <a href="pagos.html" class="btn btn-info text-white">Ver Pagos</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Servicio de Asistencia -->
+      <div class="col-md-4">
+        <div class="card text-center shadow-sm h-100">
+          <div class="card-body">
+            <i class="fas fa-clipboard-check fa-2x mb-2 text-secondary"></i>
+            <h5 class="card-title">Asistencia</h5>
+            <p class="card-text">Control y registro de la asistencia diaria de los niños en la guardería.</p>
+            <a href="asistencia.html" class="btn btn-secondary">Ver Asistencia</a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<footer class="text-center text-lg-start text-white mt-5" style="background: linear-gradient(to right, #6a11cb, #2575fc);">
+  <div class="container p-4">
+    <div class="row">
+  
+      <!-- Información -->
+      <div class="col-lg-6 col-md-12 mb-4 mb-md-0">
+        <h5 class="text-uppercase fw-bold text-light">Sistema de Gestión de Guardería</h5>
+        <p class="text-light">
+          Este sistema te permite gestionar la información de los niños, responsables, asistencias y más de forma rápida y segura.
+        </p>
+      </div>
+  
+      <!-- Enlaces -->
+      <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
+        <h5 class="text-uppercase text-light">Secciones</h5>
+        <ul class="list-unstyled mb-0">
+          <li><a href="ninos.html" class="text-light text-decoration-none">Niños</a></li>
+          <li><a href="responsables.html" class="text-light text-decoration-none">Responsables</a></li>
+          <li><a href="pagos.html" class="text-light text-decoration-none">Pagos</a></li>
+          <li><a href="asistencia.html" class="text-light text-decoration-none">Asistencia</a></li>
+        </ul>
+      </div>
+  
+      <!-- Redes sociales -->
+      <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
+        <h5 class="text-uppercase text-light">Síguenos</h5>
+        <a href="#" class="btn btn-outline-light btn-sm m-1" aria-label="Facebook">
+          <i class="fab fa-facebook-f"></i>
+        </a>
+        <a href="#" class="btn btn-outline-light btn-sm m-1" aria-label="Twitter">
+          <i class="fab fa-twitter"></i>
+        </a>
+        <a href="#" class="btn btn-outline-light btn-sm m-1" aria-label="Instagram">
+          <i class="fab fa-instagram"></i>
+        </a>
+        <a href="contacto.html" class="btn btn-outline-light btn-sm m-1" aria-label="Contacto">
+          <i class="fas fa-envelope"></i> Contacto
+        </a>
+      </div>
+  
+    </div>
+  </div>
+  
+  <div class="text-center p-3" style="background-color: rgba(0,0,0,0.2);">
+    <p class="text-light">Desarrollado por <strong>Yurani Martínez</strong></p>
+  </div>
+</footer>
+
+
+  <!-- JS Bootstrap -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Script para manejar el login y la sesión -->
+  <script>
+    let usuario = localStorage.getItem('usuario');
+    if (usuario) {
+      document.getElementById('usuario').textContent = `Bienvenido, ${usuario}`;
+      document.getElementById('loginBtn').style.display = 'none'; // Ocultar botón de login
+    } else {
+      document.getElementById('usuario').style.display = 'none'; // Ocultar el mensaje de bienvenida si no hay sesión
+    }
+  </script>
+<script src="assets/js/auth.js"></script>    
+<script src="assets/js/firebase.js"></script>  
+</body>
+</html>

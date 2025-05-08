@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Registro - Guardería</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+      background: linear-gradient(to right, #00c9ff, #92fe9d);
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0;
+    }
+
+    .login-card {
+      background: white;
+      padding: 2rem;
+      border-radius: 1rem;
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+      width: 100%;
+      max-width: 400px;
+      animation: slideIn 0.5s ease-out;
+    }
+
+    @keyframes slideIn {
+      from {
+        opacity: 0;
+        transform: translateY(-50px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .login-card h2 {
+      font-weight: 600;
+      color: #027373;
+      text-align: center;
+    }
+
+    .form-label {
+      font-weight: 600;
+    }
+
+    .btn-primary {
+      background-color: #027373;
+      border: none;
+    }
+
+    .btn-primary:hover {
+      background-color: #03989e;
+    }
+
+    .footer {
+      margin-top: 30px;
+      text-align: center;
+      color: #555;
+    }
+
+    .footer a {
+      text-decoration: none;
+      color: #00796b;
+    }
+
+    .footer a:hover {
+      color: #004d40;
+    }
+
+    .text-center p {
+      color: #027373;
+    }
+
+    .d-none {
+      display: none;
+    }
+
+    /* Responsividad */
+    @media (max-width: 768px) {
+      .login-card {
+        padding: 1.5rem;
+        width: 90%;
+      }
+    }
+
+    /* Mensaje de error en rojo */
+    .error-message {
+      color: red;
+      font-size: 14px;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+  <div class="login-card">
+    <h2 class="mb-4">Crear Cuenta</h2>
+    <form id="registerForm">
+      <div class="mb-3">
+        <label for="usuario" class="form-label">Correo Electrónico</label>
+        <input type="email" class="form-control" id="usuario" placeholder="ejemplo@correo.com" required>
+        <div class="error-message" id="usuarioError"></div>
+      </div>
+      <div class="mb-3">
+        <label for="contrasena" class="form-label">Contraseña</label>
+        <input type="password" class="form-control" id="contrasena" placeholder="Introduce tu contraseña" required>
+        <div class="error-message" id="contrasenaError"></div>
+      </div>
+      <div class="mb-3">
+        <label for="confirmarContrasena" class="form-label">Confirmar Contraseña</label>
+        <input type="password" class="form-control" id="confirmarContrasena" placeholder="Confirma tu contraseña" required>
+        <div class="error-message" id="confirmarContrasenaError"></div>
+      </div>
+      <div class="mb-3">
+        <label for="rol" class="form-label">Rol</label>
+        <select class="form-control" id="rol" required>
+          <option value="padre">Padre</option>
+          <option value="docente">Docente</option>
+          <option value="administrador">Administrador</option>
+        </select>
+      </div>
+      <div class="d-grid">
+        <button type="submit" class="btn btn-primary">Registrarse</button>
+      </div>
+      <!-- Mensaje de error general -->
+      <div class="text-center mt-3 text-danger d-none" id="errorMensaje">
+        Hubo un error al registrarse, intenta de nuevo.
+      </div>
+    </form>
+
+    <!-- Enlace a Login -->
+    <div class="mt-3 text-center">
+      <p>¿Ya tienes cuenta? <a href="login.html" class="text-decoration-none">Inicia sesión aquí</a></p>
+    </div>
+  </div>
+
+  <!-- Pie de página -->
+  <div class="footer">
+    <p>¿Tienes alguna duda? <a href="contacto.html">Contáctanos</a></p>
+  </div>
+
+  <!-- Firebase SDK -->
+  <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore.js"></script>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-app.js";
+    import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-auth.js";
+    import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore.js";
+  
+    const firebaseConfig = {
+      apiKey: "AIzaSyCgfAJpTrTPsdfSux4KWPPXAmjLMc6qYJY",
+      authDomain: "autenticacion-guarderia.firebaseapp.com",
+      projectId: "autenticacion-guarderia",
+      storageBucket: "autenticacion-guarderia.appspot.com",
+      messagingSenderId: "290954088091",
+      appId: "1:290954088091:web:9ee0a2138e70e87cad003e",
+      measurementId: "G-4CX8DSH0SK"
+    };
+  
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
+  
+    const form = document.getElementById('registerForm');
+    const errorMensaje = document.getElementById('errorMensaje');
+    const usuarioError = document.getElementById('usuarioError');
+    const contrasenaError = document.getElementById('contrasenaError');
+    const confirmarContrasenaError = document.getElementById('confirmarContrasenaError');
+  
+    form.addEventListener('submit', async function(e) {
+      e.preventDefault();
+  
+      const usuario = document.getElementById('usuario').value;
+      const contrasena = document.getElementById('contrasena').value;
+      const confirmarContrasena = document.getElementById('confirmarContrasena').value;
+      const rol = document.getElementById('rol').value;
+  
+      let valid = true;
+  
+      // Validación de los campos
+      if (!usuario.includes('@')) {
+        usuarioError.textContent = "El correo electrónico debe contener '@'."; 
+        valid = false;
+      } else {
+        usuarioError.textContent = '';
+      }
+  
+      if (contrasena.length < 6) {
+        contrasenaError.textContent = "La contraseña debe tener al menos 6 caracteres.";
+        valid = false;
+      } else {
+        contrasenaError.textContent = '';
+      }
+  
+      if (contrasena !== confirmarContrasena) {
+        confirmarContrasenaError.textContent = "Las contraseñas no coinciden.";
+        valid = false;
+      } else {
+        confirmarContrasenaError.textContent = '';
+      }
+  
+      // Si todos los campos son válidos, proceder con el registro
+      if (valid) {
+        try {
+          // Verificar si el correo electrónico ya está registrado
+          const userCredential = await createUserWithEmailAndPassword(auth, usuario, contrasena);
+          const user = userCredential.user;
+  
+          // Guardar usuario en Firestore
+          await setDoc(doc(db, "usuarios", user.uid), {
+            correo: usuario,
+            rol: rol,
+            fechaRegistro: new Date().toISOString()
+          });
+  
+          // Redirigir al login
+          window.location.href = "login.html";
+        } catch (error) {
+          console.error("Error al registrar usuario:", error);
+  
+          // Mostrar mensaje de error específico
+          if (error.code === 'auth/email-already-in-use') {
+            errorMensaje.classList.remove('d-none');
+            errorMensaje.textContent = "Este correo electrónico ya está registrado. Intenta con otro.";
+          } else {
+            errorMensaje.classList.remove('d-none');
+            errorMensaje.textContent = `Error: ${error.message}`; // Muestra el mensaje de error detallado
+          }
+        }
+      }
+    });
+  </script>
+  <script src="assets/js/auth.js"></script>    
+  <script src="assets/js/firebase.js"></script> 
+</body>
+</html>

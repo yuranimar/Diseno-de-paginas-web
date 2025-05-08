@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Gestión de Niños - Guardería</title>
+
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+  <style>
+    body {
+      background-color: #f8f9fa;
+      padding-top: 80px;
+    }
+    .card {
+      margin-bottom: 20px;
+    }
+    .table th, .table td {
+      vertical-align: middle;
+    }
+  </style>
+</head>
+<body>
+<!-- Botón para volver a la página principal -->
+<div class="container mt-3">
+    <a href="inicio.html" class="btn btn-primary">
+      <i class="fas fa-home"></i> Volver a la Página Principal
+    </a>
+  </div>
+  
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top shadow">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#"><i class="fas fa-school"></i> Guardería</a>
+      <div class="ms-auto d-flex align-items-center">
+        <!-- Condicional si el usuario no está logueado -->
+        <span class="text-white me-3" id="usuario">Bienvenido, Juan Pérez</span>
+        <a href="login.html" class="btn btn-outline-light btn-sm" id="loginBtn">Iniciar Sesión</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Contenido -->
+  <div class="container mt-4">
+    <!-- Título -->
+    <h2>Gestión de Niños</h2>
+    
+    <!-- Botón para agregar nuevo niño -->
+    <a href="index.html" class="btn btn-success mb-3"><i class="fas fa-plus-circle"></i> Agregar Niño</a>
+
+    <!-- Tabla de Niños -->
+    <table class="table table-striped table-bordered">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Nombre</th>
+          <th>Edad</th>
+          <th>Fecha de Nacimiento</th>
+          <th>Responsable(s)</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody id="ninosTable">
+        <!-- Aquí irían los datos de los niños registrados -->
+      </tbody>
+    </table>
+
+    <!-- Paginación (si es necesario) -->
+    <nav>
+      <ul class="pagination justify-content-center" id="paginacion">
+        <li class="page-item disabled"><a class="page-link" href="#">Anterior</a></li>
+        <li class="page-item"><a class="page-link" href="#">1</a></li>
+        <li class="page-item"><a class="page-link" href="#">2</a></li>
+        <li class="page-item"><a class="page-link" href="#">3</a></li>
+        <li class="page-item"><a class="page-link" href="#">Siguiente</a></li>
+      </ul>
+    </nav>
+
+  </div>
+
+  <!-- Footer -->
+  <footer class="bg-dark text-white text-center py-3 mt-5">
+    <p>&copy; 2025 Guardería - Todos los derechos reservados.</p>
+    <div>
+      <a href="#" class="text-white me-3"><i class="fab fa-facebook-f"></i></a>
+      <a href="#" class="text-white me-3"><i class="fab fa-twitter"></i></a>
+      <a href="#" class="text-white me-3"><i class="fab fa-instagram"></i></a>
+      <a href="contacto.html" class="text-white">Contacto</a>
+    </div>
+  </footer>
+
+  <!-- JS Bootstrap -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Script para manejar el login y la sesión -->
+  <script>
+    // Suponiendo que la sesión esté verificada en el backend o con localStorage
+    let usuario = localStorage.getItem('usuario'); // Por ejemplo, guardamos el nombre del usuario
+    if (usuario) {
+      document.getElementById('usuario').textContent = `Bienvenido, ${usuario}`;
+      document.getElementById('loginBtn').style.display = 'none'; // Ocultar botón de login
+    } else {
+      document.getElementById('usuario').style.display = 'none'; // Ocultar el mensaje de bienvenida si no hay sesión
+    }
+
+    // Aquí agregarías la lógica para cargar los niños desde tu base de datos o API
+    const ninos = [
+      {id: 1, nombre: 'Juan Pérez', edad: '4 años', fechaNacimiento: '10/05/2019', responsable: 'María Pérez'},
+      {id: 2, nombre: 'Ana García', edad: '3 años', fechaNacimiento: '12/02/2020', responsable: 'Carlos García'}
+    ];
+
+    const eliminarNino = (id) => {
+      // Aquí iría la lógica para eliminar el niño desde la base de datos
+      alert(`Niño con ID ${id} eliminado.`);
+      // Luego se actualiza la tabla
+      cargarTablaNinos();
+    }
+
+    const cargarTablaNinos = () => {
+      const tableBody = document.getElementById('ninosTable');
+      tableBody.innerHTML = ''; // Limpiar tabla
+
+      ninos.forEach((nino, index) => {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+          <td>${index + 1}</td>
+          <td>${nino.nombre}</td>
+          <td>${nino.edad}</td>
+          <td>${nino.fechaNacimiento}</td>
+          <td>${nino.responsable}</td>
+          <td>
+            <a href="editar_nino.html?id=${nino.id}" class="btn btn-warning btn-sm"><i class="fas fa-edit"></i> Editar</a>
+            <a href="#" class="btn btn-danger btn-sm" onclick="eliminarNino(${nino.id})"><i class="fas fa-trash"></i> Eliminar</a>
+          </td>
+        `;
+        tableBody.appendChild(row);
+      });
+    }
+
+    // Cargar los niños al iniciar la página
+    cargarTablaNinos();
+  </script>
+<script src="modales/datos.js"></script>      
+<script src="assets/js/todoCrud.js"></script>     
+<script src="assets/js/firebase.js"></script>   
+</body>
+</html>

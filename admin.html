@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+  <!-- Bootstrap CSS -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Tipografias -->
+  <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Special+Gothic+Expanded+One&display=swap" rel="stylesheet">
+
+  
+
+  <!-- Hojas de estilo -->
+  <link rel="stylesheet" href="admin.css" />
+
+  <link rel="shortcut icon" href="img/logo-Galeria.png" type="image/x-icon">
+  <title>Administrador</title>
+
+</head>
+
+<body>
+  <!-- Barra de navegación -->
+  <nav class="navbar">
+    <div class="nav-container">
+      <ul class="nav-left">
+        <li><a href="#">Inicio</a></li>
+        
+      </ul>
+
+      
+
+      <ul class="nav-right">
+        
+        <li>
+          <div class="CerrarSesion">
+            <a href="#" id="cerrarSesion">Cerrar Sesión</a>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </nav>
+
+
+  <!-- Contenido donde va la imagen de NINJA -->
+  <main>
+    <section class="img-ninja-container">
+           
+    </section>
+
+    <section class="container1">
+      <div class="container-card">
+        <h1 class="titulo-ilustraciones">Zoológicos</h1>
+        <button class="btn-add-card">Agregar Zoológico</button>
+      </div>
+    </section>
+  </main>
+
+<!-- Modal para Agregar o Editar Ilustración -->
+
+<div class="container">
+  <div class="row" id="container-card">
+    <!-- Aquí se van a agregar las cards -->
+
+    <div class="modal fade" id="agregarIlustracionModal" tabindex="-1" aria-labelledby="agregarIlustracionModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+    
+          <div class="modal-header">
+            <h5 class="modal-title" id="agregarIlustracionModalLabel">Agregar Nuevo Zoológico</h5> 
+            <!-- Este título también lo vamos a cambiar dinámicamente cuando edites -->
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+          </div>
+    
+          <div class="modal-body">
+            <form id="formAgregarIlustracion">
+    
+              <div class="mb-3">
+                <label for="titulo" class="form-label">Nombre</label>
+                <input type="text" class="form-control" id="nombre" required>
+              </div>
+    
+              <div class="mb-3">
+                <label for="descripcion" class="form-label">Descripción</label>
+                <textarea class="form-control" id="descripcion" rows="3" required></textarea>
+              </div>
+    
+              <div class="mb-3">
+                <label for="tipo" class="form-label">Dirección</label>
+                <input type="text" class="form-control" id="direccion" required>
+              </div>
+    
+              <div class="mb-3">
+                <label for="pais" class="form-label">Teléfono</label>
+                <input type="text" class="form-control" id="telefono" required>
+              </div>
+       
+              <div class="mb-3">
+                <label for="imagen" class="form-label">Nombre de la Imagen (ej: ilustracion-china-D1.png)</label>
+                <input type="text" class="form-control" id="imagen" required>
+              </div>
+    
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <button type="submit" class="btn btn-primary">Agregar Zoológico</button>
+                <!-- Este botón cambiará a "Guardar Edición" cuando sea necesario -->
+              </div>
+    
+            </form>
+          </div>
+    
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+<!-- LOS SCRIPTS AQUÍ ABAJO -->
+<script src="mainPrincipal.js" type="module"></script>
+<script src="app/cerrarSesion.js" type="module"></script>
+<script type="module" src="app/firebaselogin.js"></script>
+<script type="module" src="app/card.js"></script>
+
+
+
+<!-- Bootstrap Bundle con Popper incluido -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.min.js"></script>
+
+
+</body>
+
+</html>
